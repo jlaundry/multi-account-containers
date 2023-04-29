@@ -1,6 +1,17 @@
 async function init() {
   const fragment = document.createDocumentFragment();
-  const identities = await browser.contextualIdentities.query({});
+  // const identities = Logic.identities();
+  const unsortedIdentities = await browser.contextualIdentities.query({});
+  const containerOrderStorage = await browser.storage.local.get([CONTAINER_ORDER_STORAGE_KEY]);
+  const containerOrder =
+      containerOrderStorage && containerOrderStorage[CONTAINER_ORDER_STORAGE_KEY];
+
+  var identities = unsortedIdentities.map((identity) => {
+    if (containerOrder) {
+      identity.order = containerOrder[identity.cookieStoreId];
+    }
+    return identity;
+  }).sort((i1, i2) => i1.order - i2.order);
 
   for (const identity of identities) {
     const tr = document.createElement("tr");

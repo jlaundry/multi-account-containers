@@ -6,7 +6,7 @@ async function init() {
   const containerOrder =
       containerOrderStorage && containerOrderStorage[CONTAINER_ORDER_STORAGE_KEY];
 
-  var identities = unsortedIdentities.map((identity) => {
+  const identities = unsortedIdentities.map((identity) => {
     if (containerOrder) {
       identity.order = containerOrder[identity.cookieStoreId];
     }

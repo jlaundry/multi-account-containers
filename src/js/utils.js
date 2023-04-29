@@ -191,7 +191,6 @@ const Utils = {
   },
 
   async getIdentities() {
-    console.log("DEBUG getIdentities()");
     const [unsortedIdentities, containerOrderStorage] = await Promise.all([
       browser.contextualIdentities.query({}),
       browser.storage.local.get([CONTAINER_ORDER_STORAGE_KEY])
